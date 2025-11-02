@@ -8,14 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selection: TabOption = .home
+    
+    enum TabOption {
+        case home
+        case account
+    }
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView(selection: $selection) {
+            Tab("Home", systemImage: "house", value: TabOption.home) {
+                RestaurantsHome()
+            }
+            Tab("Account", systemImage: "gear", value: TabOption.account) {
+                AccountHost()
+            }
         }
-        .padding()
     }
 }
 
