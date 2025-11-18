@@ -10,6 +10,7 @@ import SwiftUI
 struct AccountHost: View {
     var body: some View {
         Text("Account Host")
+        Text("test push")
     }
 }
 
