@@ -30,7 +30,7 @@ struct RestaurantItem: View {
             VStack(alignment: .leading, spacing: -1) {
                 Text(restaurant.name)
                     .foregroundStyle(.primary)
-                    .font(.default)
+//                    .font(.default)
                     .fontWeight(.semibold)
                 Text(deliveryFeeText)
                     .foregroundStyle(.secondary)
