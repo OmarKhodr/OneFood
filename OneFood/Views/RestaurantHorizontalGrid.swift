@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct RestaurantHorizontalGrid: View {
+    
+    let restaurants: [Restaurant]
+    
+    let rows = [
+            GridItem(.fixed(80)),
+            GridItem(.fixed(80)),
+            GridItem(.fixed(80))
+        ]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHGrid(rows: rows, spacing: 16) {
+                ForEach(restaurants) { restaurant in
+                    SmallRestaurantCard(restaurant: restaurant)
+                }
+            }
+            .padding(.horizontal)
+        }
     }
 }
 
 #Preview {
-    RestaurantHorizontalGrid()
+    RestaurantHorizontalGrid(restaurants: ModelData().restaurants)
 }

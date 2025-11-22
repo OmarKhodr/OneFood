@@ -22,5 +22,77 @@
     "rating": 4.1,
     "distance": 3.2,
     "isFavorite": false
+  },
+  {
+    "id": 3,
+    "name": "Zaatar w Zeit",
+    "deliveryFee": 2.99,
+    "deliveryTimeMin": 30,
+    "address": "Bliss Street, Beirut",
+    "description": "Lebanese wraps, salads, and fresh bakery.",
+    "imageName": "zwz",
+    "rating": 4.5,
+    "distance": 1.8,
+    "isFavorite": true
+  },
+  {
+    "id": 4,
+    "name": "KFC",
+    "deliveryFee": 3.49,
+    "deliveryTimeMin": 25,
+    "address": "456 Chicken Ave, Beirut",
+    "description": "Famous fried chicken and sides.",
+    "imageName": "kfc",
+    "rating": 4.1,
+    "distance": 3.2,
+    "isFavorite": false
+  },
+  {
+    "id": 5,
+    "name": "Zaatar w Zeit",
+    "deliveryFee": 2.99,
+    "deliveryTimeMin": 30,
+    "address": "Bliss Street, Beirut",
+    "description": "Lebanese wraps, salads, and fresh bakery.",
+    "imageName": "zwz",
+    "rating": 4.5,
+    "distance": 1.8,
+    "isFavorite": true
+  },
+  {
+    "id": 6,
+    "name": "KFC",
+    "deliveryFee": 3.49,
+    "deliveryTimeMin": 25,
+    "address": "456 Chicken Ave, Beirut",
+    "description": "Famous fried chicken and sides.",
+    "imageName": "kfc",
+    "rating": 4.1,
+    "distance": 3.2,
+    "isFavorite": false
+  },
+  {
+    "id": 7,
+    "name": "Zaatar w Zeit",
+    "deliveryFee": 2.99,
+    "deliveryTimeMin": 30,
+    "address": "Bliss Street, Beirut",
+    "description": "Lebanese wraps, salads, and fresh bakery.",
+    "imageName": "zwz",
+    "rating": 4.5,
+    "distance": 1.8,
+    "isFavorite": true
+  },
+  {
+    "id": 8,
+    "name": "KFC",
+    "deliveryFee": 3.49,
+    "deliveryTimeMin": 25,
+    "address": "456 Chicken Ave, Beirut",
+    "description": "Famous fried chicken and sides.",
+    "imageName": "kfc",
+    "rating": 4.1,
+    "distance": 3.2,
+    "isFavorite": false
   }
 ]

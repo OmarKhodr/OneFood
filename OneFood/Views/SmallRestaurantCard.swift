@@ -38,14 +38,16 @@ struct SmallRestaurantCard: View {
                 Text(deliveryTimeMinText)
                     .foregroundStyle(.secondary)
                     .fontWeight(.semibold)
-                
             }
+            
+            Spacer()
         }
         .frame(width: 280, height: 80)
-        .background(Color.yellow)
+        .background(.lightBack)
+        .cornerRadius(5)
     }
 }
 
 #Preview {
-    SmallRestaurantCard(restaurant: MockData.sampleRestaurant)
+    SmallRestaurantCard(restaurant: ModelData().restaurants[0])
 }
