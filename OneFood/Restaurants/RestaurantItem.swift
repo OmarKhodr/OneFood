@@ -48,7 +48,7 @@ struct RestaurantItem: View {
                 .font(.callout)
             }
         }
-        .frame(width: 260)
+        .padding(.leading, 15)
     }
 }
 
