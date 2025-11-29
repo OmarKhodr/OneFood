@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9DD39AD52EDB7251008FE635 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9DD39AC52EDB7251008FE635 /* .gitignore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		237E064F2EB647A20041B1D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		237E06412EB647A10041B1D4 /* OneFood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneFood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		237E064E2EB647A20041B1D4 /* OneFoodTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OneFoodTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		237E06582EB647A20041B1D4 /* OneFoodUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OneFoodUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DD39AC52EDB7251008FE635 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		237E06382EB647A10041B1D4 = {
 			isa = PBXGroup;
 			children = (
+				9DD39AC52EDB7251008FE635 /* .gitignore */,
 				237E06432EB647A10041B1D4 /* OneFood */,
 				237E06512EB647A20041B1D4 /* OneFoodTests */,
 				237E065B2EB647A20041B1D4 /* OneFoodUITests */,
@@ -212,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DD39AD52EDB7251008FE635 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
