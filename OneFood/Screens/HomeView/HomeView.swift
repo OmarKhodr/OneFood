@@ -9,10 +9,10 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State private var searchText = ""
-    @FocusState private var isSearchFocused: Bool
+    @State private var showSearch = false
     
     var body: some View {
+        
         NavigationStack {
             ScrollView {
                 VStack {
@@ -28,17 +28,19 @@ struct HomeView: View {
                         HStack {
                             Image(systemName: "magnifyingglass")
                             
-                            TextField("Search for restaurants or items", text: $searchText)
-                                .focused($isSearchFocused)
+                            Text("Search for restaurants or items")
+                                .foregroundStyle(.gray)
+                            
+                            Spacer()
                         }
-                        .padding()
+                        .padding(10)
                         .background(
                             RoundedRectangle(cornerRadius: 30)
                                 .stroke(Color.gray.opacity(0.4), lineWidth: 1)
                         )
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            isSearchFocused = true
+                            showSearch = true
                         }
                     }
                     .padding()
@@ -56,11 +58,10 @@ struct HomeView: View {
                     Spacer()
                     
                 }
+                .navigationDestination(isPresented: $showSearch) {
+                    SearchView()
+                }
             }
-            .scrollDismissesKeyboard(.interactively)
-            .background(Color.clear.onTapGesture {
-                isSearchFocused = false
-            })
         }
     }
 }
