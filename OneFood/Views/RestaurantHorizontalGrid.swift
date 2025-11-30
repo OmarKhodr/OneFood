@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RestaurantHorizontalGrid: View {
     
+    let title: String
     let restaurants: [Restaurant]
     
     let rows = [
@@ -18,17 +19,24 @@ struct RestaurantHorizontalGrid: View {
         ]
     
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHGrid(rows: rows, spacing: 16) {
-                ForEach(restaurants) { restaurant in
-                    SmallRestaurantCard(restaurant: restaurant)
+        VStack (alignment: .leading) {
+            Text(title)
+                .font(.title3)
+                .fontWeight(.bold)
+                .padding(.leading)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHGrid(rows: rows, spacing: 16) {
+                    ForEach(restaurants) { restaurant in
+                        SmallRestaurantCard(restaurant: restaurant)
+                    }
                 }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
         }
     }
 }
 
 #Preview {
-    RestaurantHorizontalGrid(restaurants: ModelData().restaurants)
+    RestaurantHorizontalGrid(title: "Test", restaurants: ModelData().restaurants)
 }

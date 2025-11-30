@@ -25,37 +25,15 @@ struct HomeView: View {
                                 .foregroundColor(.brandPrimary)
                         }
                         
-                        HStack {
-                            Image(systemName: "magnifyingglass")
-                            
-                            Text("Search for restaurants or items")
-                                .foregroundStyle(.gray)
-                            
-                            Spacer()
-                        }
-                        .padding(10)
-                        .background(
-                            RoundedRectangle(cornerRadius: 30)
-                                .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                        )
-                        .contentShape(Rectangle())
+                        SearchBarFake()
                         .onTapGesture {
                             showSearch = true
                         }
                     }
                     .padding()
                     
-                    VStack (alignment: .leading) {
-                        Text("What's Popular")
-                            .font(.title3)
-                            .fontWeight(.bold)
-                            .padding(.leading)
-                        
-                        RestaurantHorizontalGrid(restaurants: ModelData().restaurants)
-                    }
+                    RestaurantHorizontalGrid(title: "What's popular", restaurants: ModelData().restaurants)
                     .padding(.top, 5)
-                    
-                    Spacer()
                     
                 }
                 .navigationDestination(isPresented: $showSearch) {
