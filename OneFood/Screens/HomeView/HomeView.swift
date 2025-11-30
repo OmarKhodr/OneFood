@@ -33,7 +33,28 @@ struct HomeView: View {
                     .padding()
                     
                     RestaurantHorizontalGrid(title: "What's popular", restaurants: ModelData().restaurants)
-                    .padding(.top, 5)
+                        .padding(.top, 5)
+                    
+                    RestaurantRow(rowName: "Burgers", items: ModelData().restaurants)
+                        .padding(.top, 30)
+                    
+                    RestaurantRow(rowName: "Pizzas", items: ModelData().restaurants)
+                        .padding(.top, 30)
+                    
+                    RestaurantRow(rowName: "Salads", items: ModelData().restaurants)
+                        .padding(.top, 30)
+                    
+                    RestaurantRow(rowName: "Sushi", items: ModelData().restaurants)
+                        .padding(.top, 30)
+                    
+                    RestaurantRow(rowName: "Chicken", items: ModelData().restaurants)
+                        .padding(.top, 30)
+                    
+                    RestaurantRow(rowName: "Italian", items: ModelData().restaurants)
+                        .padding(.top, 30)
+                    
+                    RestaurantRow(rowName: "Asian", items: ModelData().restaurants)
+                        .padding(.top, 30)
                     
                 }
                 .navigationDestination(isPresented: $showSearch) {
