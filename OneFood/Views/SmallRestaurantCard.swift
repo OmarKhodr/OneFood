@@ -43,7 +43,7 @@ struct SmallRestaurantCard: View {
             Spacer()
         }
         .frame(width: 280, height: 80)
-        .background(.lightBack)
+        .background(.white)
         .cornerRadius(5)
     }
 }
