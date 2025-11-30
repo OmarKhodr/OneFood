@@ -22,11 +22,11 @@ struct SearchBarFake: View {
         .frame(height: 50)
         .background(
             RoundedRectangle(cornerRadius: 30)
-                .fill(Color.white)
+                .fill(Color.searchBar)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 30)
-                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                .stroke(.searchBarOutline.opacity(0.3), lineWidth: 1)
         )
     }
 }

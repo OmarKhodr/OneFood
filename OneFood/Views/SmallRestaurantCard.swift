@@ -27,23 +27,23 @@ struct SmallRestaurantCard: View {
                 .frame(width: 100, height: 80)
                 .clipped()
             
-            Spacer()
             
-            VStack (alignment: .leading) {
+            VStack (alignment: .leading, spacing: 5) {
                 Text(restaurant.name)
-                    .fontWeight(.semibold)
+                    .font(.subheadline)
                 Text(deliveryFeeText)
                     .foregroundStyle(.secondary)
-                    .font(.callout)
+                    .font(.caption)
                 Text(deliveryTimeMinText)
                     .foregroundStyle(.secondary)
-                    .fontWeight(.semibold)
+                    .font(.caption)
             }
+            .padding(.leading, 8)
             
             Spacer()
         }
         .frame(width: 280, height: 80)
-        .background(.white)
+        .background(Color(.systemBackground))
         .cornerRadius(5)
     }
 }
