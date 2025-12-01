@@ -21,7 +21,12 @@ struct RestaurantRow: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 0) {
                     ForEach(items) { restaurant in
-                        RestaurantItem(restaurant: restaurant)
+                        NavigationLink {
+                            RestaurantDetailView(restaurant: restaurant)
+                        } label: {
+                            RestaurantItem(restaurant: restaurant)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
             }

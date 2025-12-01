@@ -28,7 +28,12 @@ struct RestaurantHorizontalGrid: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHGrid(rows: rows, spacing: 16) {
                     ForEach(restaurants) { restaurant in
-                        SmallRestaurantCard(restaurant: restaurant)
+                        NavigationLink {
+                            RestaurantDetailView(restaurant: restaurant)
+                        } label: {
+                            SmallRestaurantCard(restaurant: restaurant)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .padding(.horizontal)

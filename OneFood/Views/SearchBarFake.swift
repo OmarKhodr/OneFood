@@ -28,6 +28,7 @@ struct SearchBarFake: View {
             RoundedRectangle(cornerRadius: 30)
                 .stroke(.searchBarOutline.opacity(0.3), lineWidth: 1)
         )
+        .shadow(color: .black.opacity(0.10), radius: 6, x: 0, y: 3)
     }
 }
 
