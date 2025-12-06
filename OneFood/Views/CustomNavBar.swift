@@ -23,7 +23,7 @@ struct CustomNavBar: View {
     // Function to jump to a specific ID using the proxy
     func scrollToCategory(_ categoryID: String) {
         withAnimation(.easeInOut) {
-            scrollViewProxy.scrollTo(categoryID)
+            scrollViewProxy.scrollTo(categoryID, anchor: .top)
         }
     }
     
