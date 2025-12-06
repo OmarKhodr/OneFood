@@ -66,7 +66,7 @@ struct CustomNavBar: View {
             }
         }
         .background(
-            Color(.clear)
+            Color(.systemBackground)
                 .opacity(scrollOffset < -100 ? 1 : 0)
                 .animation(.easeInOut, value: scrollOffset < -100)
                 .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
