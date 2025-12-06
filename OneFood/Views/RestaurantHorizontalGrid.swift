@@ -29,7 +29,7 @@ struct RestaurantHorizontalGrid: View {
                 LazyHGrid(rows: rows, spacing: 16) {
                     ForEach(restaurants) { restaurant in
                         NavigationLink {
-                            RestaurantDetailView(restaurant: restaurant)
+                            RestaurantDetailView(restaurant: restaurant, restaurantMenu: ModelData().menu[0])
                         } label: {
                             SmallRestaurantCard(restaurant: restaurant)
                         }

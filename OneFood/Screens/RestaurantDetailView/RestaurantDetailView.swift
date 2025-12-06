@@ -10,9 +10,11 @@ import SwiftUI
 struct RestaurantDetailView: View {
     
     let restaurant: Restaurant
+    let restaurantMenu: RestaurantMenu
     @State private var scrollOffset: CGFloat = 0
     
     var body: some View {
+        
         ZStack(alignment: .top) {
             
             StretchyHeaderView(
@@ -22,10 +24,19 @@ struct RestaurantDetailView: View {
             
             ScrollView {
                 
-                OffsetReader()  // reads scrolling offset
-                
-                VStack {
-                    VStack(alignment: .leading, spacing: 20) {
+                VStack(spacing: 0) {
+                    
+                    OffsetReader()
+                    
+                    VStack {
+                        // Empty space to skip the StretchyHeaderView
+                    }
+                    .ignoresSafeArea()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 250) // 250(StretchyHeaderView's height)
+                    
+                    VStack (alignment: .leading, spacing: 20) {
+                        
                         Text(restaurant.name)
                             .font(.largeTitle.bold())
                         
@@ -37,105 +48,64 @@ struct RestaurantDetailView: View {
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    VStack(alignment: .leading, spacing: 20) {
-                        Text(restaurant.name)
-                            .font(.largeTitle.bold())
-                        
-                        Text("★ \(String(format: "%.1f", restaurant.rating)) good rating (500+)")
-                        Text("Allergens and info")
-                        Text("Delivery in \(restaurant.deliveryTimeMin) min")
-                        Text("AED \(String(format: "%.1f", restaurant.deliveryFee)) Delivery Fee")
+                    VStack {
+                        // Empty space
                     }
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 20)
+                    .background(.lightBack)
                     
-                    VStack(alignment: .leading, spacing: 20) {
-                        Text(restaurant.name)
-                            .font(.largeTitle.bold())
+                    // MARK: - MENU SECTION
+                    ForEach(restaurantMenu.menu, id: \.category) { category in
                         
-                        Text("★ \(String(format: "%.1f", restaurant.rating)) good rating (500+)")
-                        Text("Allergens and info")
-                        Text("Delivery in \(restaurant.deliveryTimeMin) min")
-                        Text("AED \(String(format: "%.1f", restaurant.deliveryFee)) Delivery Fee")
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    VStack(alignment: .leading, spacing: 20) {
-                        Text(restaurant.name)
-                            .font(.largeTitle.bold())
+                        Text(category.category)
+                            .font(.title2.bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                            .padding(.top, 30)
+                            .padding(.bottom, 10)
                         
-                        Text("★ \(String(format: "%.1f", restaurant.rating)) good rating (500+)")
-                        Text("Allergens and info")
-                        Text("Delivery in \(restaurant.deliveryTimeMin) min")
-                        Text("AED \(String(format: "%.1f", restaurant.deliveryFee)) Delivery Fee")
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    VStack(alignment: .leading, spacing: 20) {
-                        Text(restaurant.name)
-                            .font(.largeTitle.bold())
-                        
-                        Text("★ \(String(format: "%.1f", restaurant.rating)) good rating (500+)")
-                        Text("Allergens and info")
-                        Text("Delivery in \(restaurant.deliveryTimeMin) min")
-                        Text("AED \(String(format: "%.1f", restaurant.deliveryFee)) Delivery Fee")
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    VStack(alignment: .leading, spacing: 20) {
-                        Text(restaurant.name)
-                            .font(.largeTitle.bold())
-                        
-                        Text("★ \(String(format: "%.1f", restaurant.rating)) good rating (500+)")
-                        Text("Allergens and info")
-                        Text("Delivery in \(restaurant.deliveryTimeMin) min")
-                        Text("AED \(String(format: "%.1f", restaurant.deliveryFee)) Delivery Fee")
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                        ForEach(category.items.indices, id: \.self) { index in
+                            let item = category.items[index]
+                            MenuItemView(item: item)
+                            if index < category.items.count - 1 {
+                                Divider()
+                                    .padding(.horizontal)
+                            }
 
+                        }
+                    }
+                    .background(.lightBack)
+                    
+                    
                 }
-                .padding(.top, 200)
                 
             }
-            
-            // Toolbar background
-            Color.whiteBlack
-                .opacity(scrollOffset < -85 ? 1 : 0)
-                .animation(scrollOffset == 0 ? nil : .easeInOut, value: scrollOffset)
-                .frame(height: 130)
-                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-            
-            // ADD MENU SECTIONS UNDER THE BACKGROUND LATER
-            
-        }
-        .ignoresSafeArea()
-        .onPreferenceChange(OffsetKey.self) { value in
-            scrollOffset = value
-        }
-        // Toolbar
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text(restaurant.name)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .opacity(scrollOffset < -85 ? 1 : 0)
-                    .animation(scrollOffset == 0 ? nil : .easeInOut, value: scrollOffset)
+            .coordinateSpace(name: "scroll")
+            .onPreferenceChange(OffsetKey.self) { value in
+                scrollOffset = value
             }
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("Add") {
-                    // Action for add button
-                }
-            }
+            .ignoresSafeArea()
+//            .overlay(
+//                Text("Offset: \(Int(scrollOffset))")
+//                    .padding()
+//                    .background(.black.opacity(0.6))
+//                    .foregroundColor(.white)
+//                    .cornerRadius(10)
+//                    .padding(),
+//                alignment: .center
+//            )
+            
+            CustomNavBar(title: restaurant.name, scrollOffset: scrollOffset)
+            
         }
+        .navigationBarBackButtonHidden(true)
+        
     }
 }
 
 #Preview {
-    RestaurantDetailView(restaurant: ModelData().restaurants[0])
+    RestaurantDetailView(restaurant: ModelData().restaurants[0], restaurantMenu: ModelData().menu[0])
 }
 
 

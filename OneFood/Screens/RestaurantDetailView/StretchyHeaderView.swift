@@ -10,17 +10,19 @@ import SwiftUI
 struct StretchyHeaderView: View {
     let imageName: String
     let offset: CGFloat
-    let frameHeight: CGFloat = 200
+    let frameHeight: CGFloat = 250
     
     var body: some View {
-        VStack {
-            Image(imageName)
-                .resizable()
-                .scaledToFill()
-                .offset(y: offset > 0 ? 0 : offset * 0.1)
-                .frame(width: UIScreen.main.bounds.width, height: max(0, 200 + offset))
-                .clipped()
-        }
+        
+        Image(imageName)
+            .resizable()
+            .scaledToFill()
+            .offset(y: offset > 0 ? 0 : offset * 0.1)
+            .frame(width: UIScreen.main.bounds.width, height: max(0, frameHeight + offset))
+            .clipped()
+            .ignoresSafeArea()
+        
+        
     }
 }
 

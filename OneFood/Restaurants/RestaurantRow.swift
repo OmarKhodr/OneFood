@@ -22,7 +22,7 @@ struct RestaurantRow: View {
                 HStack(alignment: .top, spacing: 0) {
                     ForEach(items) { restaurant in
                         NavigationLink {
-                            RestaurantDetailView(restaurant: restaurant)
+                            RestaurantDetailView(restaurant: restaurant, restaurantMenu: ModelData().menu[0])
                         } label: {
                             RestaurantItem(restaurant: restaurant)
                         }

@@ -19,16 +19,18 @@ struct SearchView: View {
         
         VStack {
             HStack {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .font(.title2)
-                        .fontWeight(.medium)
-                        .foregroundStyle(.brandPrimary)
-                        .frame(width: 40, height: 40)
-                        .background()
-                }
+//                Button {
+//                    dismiss()
+//                } label: {
+//                    Image(systemName: "chevron.left")
+//                        .font(.title2)
+//                        .fontWeight(.medium)
+//                        .foregroundStyle(.brandPrimary)
+//                        .frame(width: 40, height: 40)
+//                        .background()
+//                }
+                
+                ButtonView(symbolName: "chevron.left", buttonSize: 40, action: {dismiss()})
                 
                 Spacer()
                 
@@ -53,12 +55,17 @@ struct SearchView: View {
                             .foregroundColor(.gray)
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 10)
                 .frame(height: 50)
                 .background(
                     RoundedRectangle(cornerRadius: 30)
-                        .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                        .fill(Color.searchBar)
                 )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 30)
+                        .stroke(.searchBarOutline.opacity(0.4), lineWidth: 1)
+                )
+                .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 3)
             }
             
             Spacer()

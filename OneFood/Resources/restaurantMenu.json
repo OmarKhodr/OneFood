@@ -1,0 +1,89 @@
+[
+    {
+      "id": "rest 1",
+      "restaurantInMenu": {
+        "name": "My Sample Restaurant",
+        "address": "123 Example Street, City, Country",
+        "phone": "+123-456-7890",
+        "cuisine": ["International", "Fast Food"]
+      },
+      "menu": [
+        {
+          "category": "Appetizers",
+          "items": [
+            {
+              "id": "A1",
+              "name": "Garlic Bread",
+              "description": "Toasted garlic butter bread",
+              "price": 5.99,
+              "currency": "USD",
+              "image": "zwz",
+            },
+            {
+              "id": "A2",
+              "name": "Mixed Olives (V)",
+              "description": "Marinated mixed olives with herbs",
+              "price": 4.50,
+              "currency": "USD",
+              "image": "kfc",
+            }
+          ]
+        },
+        {
+          "category": "Main Courses",
+          "items": [
+            {
+              "id": "M1",
+              "name": "Grilled Chicken Burger",
+              "description": "Chicken patty with lettuce, tomato and mayo",
+              "price": 12.99,
+              "currency": "USD",
+              "image": "zwz",
+            },
+            {
+              "id": "M2",
+              "name": "Veggie Pasta (V)",
+              "description": "Pasta with seasonal vegetables and tomato sauce",
+              "price": 11.50,
+              "currency": "USD",
+              "image": "kfc",
+            }
+          ]
+        },
+        {
+          "category": "Desserts",
+          "items": [
+            {
+              "id": "D1",
+              "name": "Chocolate Cake",
+              "description": "Rich chocolate layer cake with vanilla frosting",
+              "price": 6.00,
+              "currency": "USD",
+              "image": "zwz",
+            }
+          ]
+        },
+        {
+          "category": "Drinks",
+          "items": [
+            {
+              "id": "R1",
+              "name": "Coca-Cola (330 ml)",
+              "description": "",
+              "price": 2.50,
+              "currency": "USD",
+              "image": "kfc",
+            },
+            {
+              "id": "R2",
+              "name": "Fresh Orange Juice (350 ml)",
+              "description": "Freshly squeezed orange juice",
+              "price": 3.75,
+              "currency": "USD",
+              "image": "zwz",
+            }
+          ]
+        }
+      ]
+    }
+]
