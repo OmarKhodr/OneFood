@@ -11,19 +11,23 @@ struct RestaurantDetailView: View {
     
     let restaurant: Restaurant
     let restaurantMenu: RestaurantMenu
+    
+    @State var topSafeArea: CGFloat = 0
+    
     @State private var scrollOffset: CGFloat = 0
     @State private var selectedCategoryID: String?
+    @State private var categoryOffsets: [CGFloat] = [] // Stores all calculated category offsets
     
     var body: some View {
         
-        ZStack(alignment: .top) {
+        GeometryReader { geo in
             
-            StretchyHeaderView(
-                imageName: restaurant.imageName,
-                offset: scrollOffset
-            )
-            
-            ScrollViewReader { proxy in
+            ZStack(alignment: .top) {
+                
+                StretchyHeaderView(
+                    imageName: restaurant.imageName,
+                    offset: scrollOffset
+                )
                 
                 ScrollView {
                     
@@ -37,7 +41,6 @@ struct RestaurantDetailView: View {
                         .ignoresSafeArea()
                         .frame(maxWidth: .infinity)
                         .frame(height: 250) // 250(StretchyHeaderView's height)
-                        .id("TOP_ANCHOR")
                         
                         VStack (alignment: .leading, spacing: 20) {
                             
@@ -60,19 +63,22 @@ struct RestaurantDetailView: View {
                         .background(.lightBack)
                         
                         // MARK: - MENU SECTION
-                        ForEach(restaurantMenu.menu, id: \.category) { category in
+                        ForEach(restaurantMenu.menu.indices, id: \.self) { index in
+                            let category = restaurantMenu.menu[index]
                             
-                            // This GeometryReader detects when this category is visible
+//                            Geometry reader to capture the offset Y position
                             GeometryReader { innerGeo in
                                 Color.clear
-                                    .preference(key: CategoryOffsetKey.self, value: innerGeo.frame(in: .named("scrollViewCoordSpace")).minY)
-                                    .onPreferenceChange(CategoryOffsetKey.self) { minY in
-                                        if minY <= 120 && minY >= 100 {
-                                            selectedCategoryID = category.category
-                                        }
+                                    .onAppear {
+                                        // Initial population might happen here too
+                                        categoryOffsets.append(innerGeo.frame(in: .named("scrollViewCoordSpace")).minY)
+                                        
+                                        categoryOffsets.sort()
                                     }
                             }
-                            .frame(height: 0)
+                            .frame(height: 0) // Collapse the GeoReader
+                            
+                            
                             
                             Text(category.category)
                                 .font(.title2.bold())
@@ -110,29 +116,52 @@ struct RestaurantDetailView: View {
                 }
                 .ignoresSafeArea()
                 .overlay(
-                    CustomNavBar(
-                        title: restaurant.name,
-                        scrollOffset: scrollOffset,
-                        categories: restaurantMenu.menu.map { $0.category },
-                        selectedCategoryID: $selectedCategoryID,
-                        scrollViewProxy: proxy
-                    ),
+                    VStack(spacing: 0) {
+                        CustomNavBar(
+                            title: restaurant.name,
+                            scrollOffset: scrollOffset
+                        )
+                        
+                        CategoryHeaderView(
+                            categories: restaurantMenu.menu.map { $0.category },
+                            scrollOffset: scrollOffset,
+                            categoryOffsets: categoryOffsets,
+                            topSafeArea: geo.safeAreaInsets.top
+                        )
+                    },
                     alignment: .top
                 )
-                //            .overlay(
-                //                Text("Offset: \(Int(scrollOffset))")
-                //                    .padding()
-                //                    .background(.black.opacity(0.6))
-                //                    .foregroundColor(.white)
-                //                    .cornerRadius(10)
-                //                    .padding(),
-                //                alignment: .center
-                //            )
+                .overlay(
+                    VStack {
+                        Text("Offset: \(Int(scrollOffset))")
+                            .padding()
+                            .background(.black.opacity(0.6))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding()
+                        
+                        Button {
+                            printOffsets(categoryOffsets)
+                        } label: {
+                            Text("Print")
+                                .frame(width: 50, height: 50)
+                                .background(.red)
+                        }
+                    }
+                    
+                )
+                
+                
             }
-            
+            .navigationBarBackButtonHidden(true)
         }
-        .navigationBarBackButtonHidden(true)
         
+    }
+    
+    func printOffsets(_ categoryOffsets: [CGFloat]) {
+        for categoryOffset in categoryOffsets {
+            print(categoryOffset)
+        }
     }
 }
 
@@ -140,13 +169,12 @@ struct RestaurantDetailView: View {
     RestaurantDetailView(restaurant: ModelData().restaurants[0], restaurantMenu: ModelData().menu[0])
 }
 
-
 struct OffsetReader: View {
     var body: some View {
         GeometryReader { geo in
             Color.clear
                 .preference(key: OffsetKey.self,
-                            value: geo.frame(in: .named("scroll")).minY)
+                            value: geo.frame(in: .named("MainScroll")).minY)
         }
         .frame(height: 0)
     }
@@ -159,10 +187,10 @@ struct OffsetKey: PreferenceKey {
     }
 }
 
-struct CategoryOffsetKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        // We only care about the highest value (closest to the top)
-        value = nextValue()
-    }
+
+// Class to store the category with their offset in an array
+struct CategoryOffsetData: Identifiable, Equatable {
+    var id: String { category } // category name as ID
+    let category: String
+    var offset: CGFloat = 0
 }

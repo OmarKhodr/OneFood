@@ -18,21 +18,9 @@ struct SearchView: View {
     var body: some View {
         
         VStack {
-            HStack {
-//                Button {
-//                    dismiss()
-//                } label: {
-//                    Image(systemName: "chevron.left")
-//                        .font(.title2)
-//                        .fontWeight(.medium)
-//                        .foregroundStyle(.brandPrimary)
-//                        .frame(width: 40, height: 40)
-//                        .background()
-//                }
+            HStack(spacing: 20) {
                 
-                ButtonView(symbolName: "chevron.left", buttonSize: 40, action: {dismiss()})
-                
-                Spacer()
+                ButtonView(symbolName: "chevron.left", buttonSize: 44, action: {dismiss()})
                 
                 HStack {
                     Image(systemName: "magnifyingglass")
@@ -57,6 +45,7 @@ struct SearchView: View {
                 }
                 .padding(.horizontal, 10)
                 .frame(height: 50)
+                .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 30)
                         .fill(Color.searchBar)
@@ -70,7 +59,7 @@ struct SearchView: View {
             
             Spacer()
         }
-        .padding(.horizontal)
+        .padding(.horizontal, 20)
         .navigationBarBackButtonHidden(true)
     }
 }
