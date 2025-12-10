@@ -10,13 +10,15 @@ struct CategoryHeaderView: View {
     let categories: [String]
     let scrollOffset: CGFloat
     let categoryOffsets: [CGFloat]
-    let topSafeArea: CGFloat
+    let topAreaHeight: CGFloat // this is the value of topSafeArea + customNavBar + CategoryHeaderView
+    
+    @State private var scrollPosition: ScrollPosition = .init(idType: Int.self)
     
     @State private var selectedCategoryID: String?
     
-    private var categoriesAreVisible: Bool {
-        scrollOffset < -300 // Fade in when header is gone
-    }
+    @State private var categoriesAreVisible: Bool = false
+    
+    let onCategoryTap: (Int) -> Void
     
     var body: some View {
         
@@ -37,11 +39,10 @@ struct CategoryHeaderView: View {
             VStack {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 15) {
-                        ForEach(categories, id: \.self) { categoryName in
-                            Button(action: {
-                                // jumpAction(categoryName)
-                                selectedCategoryID = categoryName
-                            }) {
+                        ForEach(Array(categories.enumerated()), id: \.offset) { index, categoryName in
+                            Button{
+                                onCategoryTap(index)
+                            }label: {
                                 Text(categoryName)
                                     .font(.subheadline)
                                     .fontWeight(.medium)
@@ -61,6 +62,7 @@ struct CategoryHeaderView: View {
                     }
                     .padding(.horizontal)
                 }
+                .scrollPosition($scrollPosition, anchor: .center)
                 
                 Spacer()
                 
@@ -71,28 +73,39 @@ struct CategoryHeaderView: View {
             )
             
         }
-        .opacity(categoriesAreVisible ? 1 : 0)
+        .opacity(scrollOffset == 0 ? 0 : (categoriesAreVisible ? 1 : 0))
         .animation(.easeInOut(duration: 0.3), value: categoriesAreVisible)
         .onChange(of: scrollOffset, initial: false) { oldValue, newValue in
-            updateSelectedCategory(for: -newValue + 100 + topSafeArea) //100 is the height of CustomNavBar + CategoryHeaderView
+            updateSelectedCategory(for: -newValue + topAreaHeight) //this is the height of CustomNavBar + CategoryHeaderView + safeArea
+            categoriesAreVisible = newValue < -300
         }
     }
     
     func updateSelectedCategory(for offset: CGFloat) {
         guard !categoryOffsets.isEmpty else { return }
         
+        if (offset < categoryOffsets[0]) {
+            selectedCategoryID = ""
+            return
+        }
+        
         for i in 0..<categoryOffsets.count {
             let start = categoryOffsets[i]
             let end = i < categoryOffsets.count - 1 ? categoryOffsets[i+1] : .infinity
             
             if offset >= start && offset < end {
-                selectedCategoryID = categories[i]
+                if (categories[i] != selectedCategoryID) {
+                    withAnimation(.easeInOut) {
+                        scrollPosition.scrollTo(id: i)
+                    }
+                    selectedCategoryID = categories[i]
+                }
                 break
             }
         }
     }
 }
 
-#Preview {
-    CategoryHeaderView(categories: ModelData().menu[0].menu.map { $0.category }, scrollOffset: -500, categoryOffsets: [], topSafeArea: 0)
-}
+//#Preview {
+//    CategoryHeaderView(categories: ModelData().menu[0].menu.map { $0.category }, scrollOffset: -500, categoryOffsets: [], topSafeArea: 0)
+//}

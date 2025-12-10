@@ -18,7 +18,7 @@ struct MenuItemView: View {
                     .fontWeight(.medium)
                     .lineLimit(1)
                 
-                Text("item.descriptionlaksdj")
+                Text(item.description)
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .lineLimit(2)

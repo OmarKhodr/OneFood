@@ -15,6 +15,8 @@ struct CustomNavBar: View {
     
     private let navButtonSize: CGFloat = 44
     
+    @State private var isBackgroundAndTitleVisible: Bool = false
+    
     
     var body: some View {
         
@@ -27,8 +29,8 @@ struct CustomNavBar: View {
                 Text(title)
                     .font(.title2)
                     .fontWeight(.bold)
-                    .opacity(scrollOffset < -100 ? 1 : 0)
-                    .animation(.easeInOut, value: scrollOffset < -100)
+                    .opacity(scrollOffset == 0 ? 0 : (isBackgroundAndTitleVisible ? 1 : 0))
+                    .animation(.easeInOut(duration: 0.3), value: isBackgroundAndTitleVisible)
                 
                 Spacer()
                 
@@ -42,12 +44,15 @@ struct CustomNavBar: View {
         .frame(height: 60)
         .background(
             Color(.systemBackground)
-                .opacity(scrollOffset < -100 ? 1 : 0)
-                .animation(.easeInOut, value: scrollOffset < -100)
+                .opacity(scrollOffset == 0 ? 0 : (isBackgroundAndTitleVisible ? 1 : 0))
+                .animation(.easeInOut(duration: 0.3), value: isBackgroundAndTitleVisible)
                 .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                 .ignoresSafeArea(.all, edges: .top)
             
         )
+        .onChange(of: scrollOffset, initial: false) { oldValue, newValue in
+            isBackgroundAndTitleVisible = newValue < -100
+        }
     }
 }
 

@@ -8,6 +8,51 @@
         "cuisine": ["International", "Fast Food"]
       },
       "menu": [
+          {
+            "category": "Deals",
+            "items": [
+              {
+                "id": "S1",
+                "name": "Garlic Bread",
+                "description": "Toasted garlic butter bread",
+                "price": 5.99,
+                "currency": "USD",
+                "image": "zwz",
+              },
+              {
+                "id": "S2",
+                "name": "Mixed Olives (V)",
+                "description": "Marinated mixed olives with herbs",
+                "price": 4.50,
+                "currency": "USD",
+                "image": "kfc",
+              },
+              {
+                "id": "S3",
+                "name": "Garlic Bread",
+                "description": "Toasted garlic butter bread",
+                "price": 5.99,
+                "currency": "USD",
+                "image": "zwz",
+              },
+              {
+                "id": "S4",
+                "name": "Mixed Olives (V)",
+                "description": "Marinated mixed olives with herbs",
+                "price": 4.50,
+                "currency": "USD",
+                "image": "kfc",
+              },
+              {
+                "id": "S5",
+                "name": "Garlic Bread",
+                "description": "Toasted garlic butter bread",
+                "price": 5.99,
+                "currency": "USD",
+                "image": "zwz",
+              }
+            ]
+          },
         {
           "category": "Appetizers",
           "items": [
@@ -47,6 +92,22 @@
               "price": 11.50,
               "currency": "USD",
               "image": "kfc",
+            },
+            {
+              "id": "M3",
+              "name": "Grilled Chicken Burger",
+              "description": "Chicken patty with lettuce, tomato and mayo",
+              "price": 12.99,
+              "currency": "USD",
+              "image": "zwz",
+            },
+            {
+              "id": "M4",
+              "name": "Veggie Pasta (V)",
+              "description": "Pasta with seasonal vegetables and tomato sauce",
+              "price": 11.50,
+              "currency": "USD",
+              "image": "kfc",
             }
           ]
         },
@@ -76,6 +137,51 @@
             },
             {
               "id": "R2",
+              "name": "Fresh Orange Juice (350 ml)",
+              "description": "Freshly squeezed orange juice",
+              "price": 3.75,
+              "currency": "USD",
+              "image": "zwz",
+            }
+          ]
+        },
+        {
+          "category": "Extras",
+          "items": [
+            {
+              "id": "E1",
+              "name": "Coca-Cola (330 ml)",
+              "description": "",
+              "price": 2.50,
+              "currency": "USD",
+              "image": "kfc",
+            },
+            {
+              "id": "E2",
+              "name": "Fresh Orange Juice (350 ml)",
+              "description": "Freshly squeezed orange juice",
+              "price": 3.75,
+              "currency": "USD",
+              "image": "zwz",
+            },
+            {
+              "id": "E3",
+              "name": "Fresh Orange Juice (350 ml)",
+              "description": "Freshly squeezed orange juice",
+              "price": 3.75,
+              "currency": "USD",
+              "image": "zwz",
+            },
+            {
+              "id": "E4",
+              "name": "Fresh Orange Juice (350 ml)",
+              "description": "Freshly squeezed orange juice",
+              "price": 3.75,
+              "currency": "USD",
+              "image": "zwz",
+            },
+            {
+              "id": "E5",
               "name": "Fresh Orange Juice (350 ml)",
               "description": "Freshly squeezed orange juice",
               "price": 3.75,
