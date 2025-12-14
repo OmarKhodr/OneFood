@@ -94,7 +94,7 @@ struct CategoryHeaderView: View {
             let end = i < categoryOffsets.count - 1 ? categoryOffsets[i+1] : .infinity
             
             if offset >= start && offset < end {
-                if (categories[i] != selectedCategoryID) {
+                if (i < categories.count && categories[i] != selectedCategoryID) {
                     withAnimation(.easeInOut) {
                         scrollPosition.scrollTo(id: i)
                     }

@@ -8,10 +8,16 @@ import SwiftUI
 
 struct CustomNavBar: View {
     
-    @Environment(\.dismiss) var dismiss
-    
     let title: String
     let scrollOffset: CGFloat
+    let leftButtonName: String
+    let rightButtonName: String
+    let offsetToAppear: CGFloat // the title and background appear at this offset
+    let barHeight: CGFloat
+    let hasSpacer: Bool
+    
+    let onLeftButtonTap: () -> Void
+    let onRightButtonTap: () -> Void
     
     private let navButtonSize: CGFloat = 44
     
@@ -22,7 +28,7 @@ struct CustomNavBar: View {
         
         VStack {
             HStack {
-                ButtonView(symbolName: "chevron.left", buttonSize: navButtonSize, action: {dismiss()})
+                ButtonView(symbolName: leftButtonName, buttonSize: navButtonSize, action: onLeftButtonTap)
                 
                 Spacer()
                 
@@ -34,14 +40,16 @@ struct CustomNavBar: View {
                 
                 Spacer()
                 
-                ButtonView(symbolName: "magnifyingglass", buttonSize: navButtonSize, action: {})
+                ButtonView(symbolName: rightButtonName, buttonSize: navButtonSize, action: onRightButtonTap)
             }
             .padding(.horizontal)
             
-            Spacer()
+            if(hasSpacer) {
+                Spacer()
+            }
             
         }
-        .frame(height: 60)
+        .frame(height: barHeight)
         .background(
             Color(.systemBackground)
                 .opacity(scrollOffset == 0 ? 0 : (isBackgroundAndTitleVisible ? 1 : 0))
@@ -51,11 +59,21 @@ struct CustomNavBar: View {
             
         )
         .onChange(of: scrollOffset, initial: false) { oldValue, newValue in
-            isBackgroundAndTitleVisible = newValue < -100
+            isBackgroundAndTitleVisible = newValue < offsetToAppear
         }
     }
 }
 
 #Preview {
-    CustomNavBar(title: "Test", scrollOffset: -101)
+    CustomNavBar(
+        title: "Test",
+        scrollOffset: 100,
+        leftButtonName: "chevron.left",
+        rightButtonName: "magnifyingglass",
+        offsetToAppear: 100,
+        barHeight: 60,
+        hasSpacer: false,
+        onLeftButtonTap: {},
+        onRightButtonTap: {}
+    )
 }

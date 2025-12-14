@@ -189,7 +189,87 @@
               "image": "zwz",
             }
           ]
+        },
+        {
+          "category": "Desserties",
+          "items": [
+            {
+              "id": "X1",
+              "name": "Chocolate Cake",
+              "description": "Rich chocolate layer cake with vanilla frosting",
+              "price": 6.00,
+              "currency": "USD",
+              "image": "zwz",
+            }
+          ]
+        },
+        {
+          "category": "Drinkies",
+          "items": [
+            {
+              "id": "Y1",
+              "name": "Coca-Cola (330 ml)",
+              "description": "",
+              "price": 2.50,
+              "currency": "USD",
+              "image": "kfc",
+            },
+            {
+              "id": "Y2",
+              "name": "Fresh Orange Juice (350 ml)",
+              "description": "Freshly squeezed orange juice",
+              "price": 3.75,
+              "currency": "USD",
+              "image": "zwz",
+            }
+          ]
+        },
+        {
+          "category": "Extries",
+          "items": [
+            {
+              "id": "Z1",
+              "name": "Coca-Cola (330 ml)",
+              "description": "",
+              "price": 2.50,
+              "currency": "USD",
+              "image": "kfc",
+            },
+            {
+              "id": "Z2",
+              "name": "Fresh Orange Juice (350 ml)",
+              "description": "Freshly squeezed orange juice",
+              "price": 3.75,
+              "currency": "USD",
+              "image": "zwz",
+            },
+            {
+              "id": "Z3",
+              "name": "Fresh Orange Juice (350 ml)",
+              "description": "Freshly squeezed orange juice",
+              "price": 3.75,
+              "currency": "USD",
+              "image": "zwz",
+            },
+            {
+              "id": "Z4",
+              "name": "Fresh Orange Juice (350 ml)",
+              "description": "Freshly squeezed orange juice",
+              "price": 3.75,
+              "currency": "USD",
+              "image": "zwz",
+            },
+            {
+              "id": "Z5",
+              "name": "Fresh Orange Juice (350 ml)",
+              "description": "Freshly squeezed orange juice",
+              "price": 3.75,
+              "currency": "USD",
+              "image": "zwz",
+            }
+          ]
         }
+        
       ]
     }
 ]

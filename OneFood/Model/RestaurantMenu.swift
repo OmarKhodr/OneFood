@@ -32,5 +32,5 @@ struct MenuItem: Identifiable, Hashable, Codable {
     var description: String
     var price: Float
     var currency: String
-    var image: String?
+    var image: String
 }

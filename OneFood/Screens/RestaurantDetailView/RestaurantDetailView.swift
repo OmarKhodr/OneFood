@@ -9,6 +9,8 @@ import SwiftUI
 
 struct RestaurantDetailView: View {
     
+    @Environment(\.dismiss) var dismiss
+    
     let restaurant: Restaurant
     let restaurantMenu: RestaurantMenu
     
@@ -19,7 +21,8 @@ struct RestaurantDetailView: View {
     
     @State private var scrollOffset: CGFloat = 0
     @State private var selectedCategoryID: String?
-    @State private var categoryOffsets: [CGFloat] = [] // Stores all calculated category offsets
+    @State private var categoryOffsets: [CGFloat] = [] // Stores calculated category offsets
+    @State private var selectedMenuItem: MenuItem?
     
     private let navBarHeight: CGFloat = 60
     private let categoryBarHeight: CGFloat = 40
@@ -32,137 +35,120 @@ struct RestaurantDetailView: View {
                 
                 StretchyHeaderView(
                     imageName: restaurant.imageName,
-                    offset: scrollOffset
+                    offset: scrollOffset,
+                    isIgnoringSafeArea: true
                 )
                 
-                ScrollViewReader { proxy in
-                    ScrollView {
+                ScrollView {
+                    
+                    VStack(spacing: 0) {
                         
-                        VStack(spacing: 0) {
+                        OffsetReader()
+                        
+                        VStack {
+                            // Empty space to skip the StretchyHeaderView
+                        }
+                        .ignoresSafeArea()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 250) // 250(StretchyHeaderView's height)
+                        
+                        VStack (alignment: .leading, spacing: 20) {
                             
-                            OffsetReader()
+                            Text(restaurant.name)
+                                .font(.largeTitle.bold())
                             
-                            VStack {
-                                // Empty space to skip the StretchyHeaderView
-                            }
-                            .ignoresSafeArea()
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 250) // 250(StretchyHeaderView's height)
+                            Text("★ \(String(format: "%.1f", restaurant.rating)) good rating (500+)")
+                            Text("Allergens and info")
+                            Text("Delivery in \(restaurant.deliveryTimeMin) min")
+                            Text("AED \(String(format: "%.1f", restaurant.deliveryFee)) Delivery Fee")
+                        }
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        VStack {
+                            // Empty space
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 20)
+                        .background(.lightBack)
+                        
+                        // MARK: - MENU SECTION
+                        MenuSectionView(restaurantMenu: restaurantMenu, scrollOffset: scrollOffset, categoryOffsets: $categoryOffsets, selectedMenuItem: $selectedMenuItem)
+                        
+                        
+                        VStack {
+                            // Empty space
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 100)
+                        .background(.lightBack)
+                        
+                    }
+                    
+                }
+                
+                .scrollPosition($scrollPosition, anchor: .top)
+                .coordinateSpace(name: "scrollViewCoordSpace")
+                .onPreferenceChange(OffsetKey.self) { value in
+                    scrollOffset = value
+                }
+                .ignoresSafeArea()
+                .overlay(
+                    VStack(spacing: 0) {
+                        CustomNavBar(
+                            title: restaurant.name,
+                            scrollOffset: scrollOffset,
+                            leftButtonName: "chevron.left",
+                            rightButtonName: "magnifyingglass",
+                            offsetToAppear: -100,
+                            barHeight: navBarHeight,
+                            hasSpacer: true,
+                            onLeftButtonTap: {dismiss()},
+                            onRightButtonTap: {}
+                        )
+                        
+                        CategoryHeaderView(
+                            categories: restaurantMenu.menu.map { $0.category },
+                            scrollOffset: scrollOffset,
+                            categoryOffsets: categoryOffsets,
+                            topAreaHeight: geo.safeAreaInsets.top + navBarHeight + categoryBarHeight
+                        ){ tappedCategoryIndex in
                             
-                            VStack (alignment: .leading, spacing: 20) {
-                                
-                                Text(restaurant.name)
-                                    .font(.largeTitle.bold())
-                                
-                                Text("★ \(String(format: "%.1f", restaurant.rating)) good rating (500+)")
-                                Text("Allergens and info")
-                                Text("Delivery in \(restaurant.deliveryTimeMin) min")
-                                Text("AED \(String(format: "%.1f", restaurant.deliveryFee)) Delivery Fee")
-                            }
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            VStack {
-                                // Empty space
-                            }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 20)
-                            .background(.lightBack)
-                            
-                            // MARK: - MENU SECTION
-                            ForEach(restaurantMenu.menu.indices, id: \.self) { index in
-                                let category = restaurantMenu.menu[index]
-                                
-                                GeometryReader { innerGeo in
-                                    Color.clear
-                                        .onAppear {
-                                            categoryOffsets.append(innerGeo.frame(in: .named("scrollViewCoordSpace")).minY)
-                                            
-                                            categoryOffsets.sort()
-                                        }
-                                }
-                                .frame(height: 0)
-                                
-                                
-                                Text(category.category)
-                                    .font(.title2.bold())
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.horizontal)
-                                    .padding(.top, 30)
-                                    .padding(.bottom, 10)
-                                
-                                ForEach(category.items.indices, id: \.self) { index in
-                                    let item = category.items[index]
-                                    MenuItemView(item: item)
-                                    if index < category.items.count - 1 {
-                                        Divider()
-                                            .padding(.horizontal)
-                                    }
-                                    
-                                }
-                            }
-                            .background(.lightBack)
-                            
-                            
-                            VStack {
-                                // Empty space
-                            }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 100)
-                            .background(.lightBack)
+                            scrollToCategory(at: tappedCategoryIndex, safeArea: geo.safeAreaInsets.top)
                             
                         }
-                        
-                    }
-                    .scrollPosition($scrollPosition, anchor: .top)
-                    .coordinateSpace(name: "scrollViewCoordSpace")
-                    .onPreferenceChange(OffsetKey.self) { value in
-                        scrollOffset = value
-                    }
-                    .ignoresSafeArea()
-                    .overlay(
-                        VStack(spacing: 0) {
-                            CustomNavBar(
-                                title: restaurant.name,
-                                scrollOffset: scrollOffset
-                            )
-                            
-                            CategoryHeaderView(
-                                categories: restaurantMenu.menu.map { $0.category },
-                                scrollOffset: scrollOffset,
-                                categoryOffsets: categoryOffsets,
-                                topAreaHeight: geo.safeAreaInsets.top + navBarHeight + categoryBarHeight
-                            ){ tappedCategoryIndex in
-                                
-                                scrollToCategory(at: tappedCategoryIndex, proxy: proxy, safeArea: geo.safeAreaInsets.top)
-                                
-                            }
-                        },
-                        alignment: .top
-                    )
-                    //                .overlay(
-                    //                    VStack {
-                    //                        Text("Offset: \(Int(scrollOffset))")
-                    //                            .padding()
-                    //                            .background(.black.opacity(0.6))
-                    //                            .foregroundColor(.white)
-                    //                            .cornerRadius(10)
-                    //                            .padding()
-                    //                        
-                    //                        Button {
-                    //                            printOffsets(categoryOffsets)
-                    //                        } label: {
-                    //                            Text("Print")
-                    //                                .frame(width: 50, height: 50)
-                    //                                .background(.red)
-                    //                        }
-                    //                    }
-                    //                    
-                    //                )
-                }
+                    },
+                    alignment: .top
+                )
+                //                .overlay(
+                //                    VStack {
+                //                        Text("Offset: \(Int(scrollOffset))")
+                //                            .padding()
+                //                            .background(.black.opacity(0.6))
+                //                            .foregroundColor(.white)
+                //                            .cornerRadius(10)
+                //                            .padding()
+                //
+                //                        Button {
+                //                            printOffsets(categoryOffsets)
+                //                        } label: {
+                //                            Text("Print")
+                //                                .frame(width: 50, height: 50)
+                //                                .background(.red)
+                //                        }
+                //                    }
+                //
+                //                )
+                
             }
             .navigationBarBackButtonHidden(true)
+            .sheet(item: $selectedMenuItem) { menuItem in
+                MenuItemDetailView(menuItem: menuItem)
+            }
         }
+        
+        
+        
         
     }
     
@@ -172,8 +158,8 @@ struct RestaurantDetailView: View {
         }
     }
     
-    func scrollToCategory(at index: Int, proxy: ScrollViewProxy, safeArea: CGFloat) {
-
+    func scrollToCategory(at index: Int, safeArea: CGFloat) {
+        
         withAnimation(.easeInOut) {
             scrollPosition.scrollTo(y: categoryOffsets[index] + 1 - (safeArea + 100))
         }
@@ -200,12 +186,4 @@ struct OffsetKey: PreferenceKey {
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()
     }
-}
-
-
-// Class to store the category with their offset in an array
-struct CategoryOffsetData: Identifiable, Equatable {
-    var id: String { category } // category name as ID
-    let category: String
-    var offset: CGFloat = 0
 }

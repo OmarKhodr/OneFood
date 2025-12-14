@@ -30,7 +30,7 @@ struct MenuItemView: View {
             
             Spacer()
             
-            Image(item.image ?? "kfc")
+            Image(item.image)
                 .resizable()
                 .scaledToFill()
                 .frame(width: 90, height: 90)
